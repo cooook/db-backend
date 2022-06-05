@@ -17,4 +17,7 @@ func Register_api(r *gin.Engine) {
 	api_group.GET("/courses", handler.Course_get_all)
 	api_group.GET("/courses/:course_id", handler.Course_get_handler)
 	api_group.POST("/courses", handler.Course_post_handler)
+
+	api_group.GET("/course_table", handler.Select_getby_student_handler)
+	api_group.PUT("/course_table", handler.Update_Score_handler)
 }

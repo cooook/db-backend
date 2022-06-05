@@ -25,3 +25,4 @@ create TABLE `course_select` (
     `score` int , 
     PRIMARY KEY (student_id, course_id)
 ) ENGINE=InnoDB;
+
