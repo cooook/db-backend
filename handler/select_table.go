@@ -16,7 +16,7 @@ type Course_Select struct {
 
 type Student_View struct {
 	Student_id  int    `db:"student_id"`
-	Stu_Name    string `db:"user_name"`
+	Stu_Name    string `db:"username"`
 	Course_id   string `db:"course_id"`
 	Teacher     string `db:"teacher"`
 	Score       int    `db:"score"`
@@ -27,7 +27,7 @@ func Select_getby_student_handler(c *gin.Context) {
 	var student_info Course_Select
 	var student_course []Course_Select
 	var view []Student_View
-	if err := c.ShouldBindUri(&student_info); err != nil {
+	if err := c.ShouldBindJSON(&student_info); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -41,11 +41,12 @@ func Select_getby_student_handler(c *gin.Context) {
 	}
 
 	if err := Db.Select(&view,
-		`select courses.course_id, courses.teacher, courses.name, courses.score, course_select.score 
+		`select courses.course_id, users.username, courses.teacher, courses.name, courses.score, course_select.score 
 		from users, course_select, courses
 		where users.id = ? 
 		and course_select.student_id = users.id
 		and courses.course_id = course_select.course_id
+		and courses.teacher_id = course_select.teacher_id
 		`, student_info.Student_id); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
