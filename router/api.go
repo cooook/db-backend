@@ -10,7 +10,7 @@ import (
 func Register_api(r *gin.Engine) {
 	r.POST("/auth", auth.AuthHandler)
 
-	api_group := r.Group("/api").Use(auth.JWTAuth())
+	api_group := r.Group("/v1").Use(auth.JWTAuth())
 
 	api_group.GET("/users", auth.IsTypeMiddleWare(auth.Admin_Type, true), handler.User_get_all)           //.Use(auth.IsTypeMiddleWare(auth.Student_Type, true))
 	api_group.POST("/users", auth.IsTypeMiddleWare(auth.Admin_Type, true), handler.User_post_handler)     // .Use(auth.IsTypeMiddleWare(auth.Admin_Type, true))

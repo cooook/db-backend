@@ -1,0 +1,8 @@
+
+addr: :8888
+db: 
+  dbname: course_select
+  addr: 127.0.0.1
+  port: 3306
+  username: backend
+  password: 123456
