@@ -37,6 +37,13 @@ func User_get_handler(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	user_id, ok := c.Get("user_id")
+	if !ok || user_id != json.UserId {
+		c.JSON(http.StatusOK, gin.H{"error": "operation not allowed"})
+		return
+	}
+
 	if err := Db.Select(&user, "select id, username, college, profession from users where id=?", json.UserId); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
