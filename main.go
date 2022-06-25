@@ -29,5 +29,3 @@ func main() {
 
 	r.Run(viper.GetString("addr"))
 }
-
-// [TODO] 教师为每位同学修改成绩

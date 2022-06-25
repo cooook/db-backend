@@ -83,7 +83,7 @@ func Add_course_select_entry(c *gin.Context) {
 		return
 	}
 
-	if err := Db.Select(&course, "Select course_id from courses where course_id = ? and teacher_id = ?",
+	if err := Db.Select(&course, "Select course_id from courses where course_id = ? and teacher_id = ? and num < max_num",
 		entry.Course_id, entry.Teacher_id); err != nil {
 		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
 		return
@@ -106,6 +106,18 @@ func Add_course_select_entry(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	r, err = Db.Exec("update courses set num = num + 1 where course_id = ? and teacher_id = ?", entry.Course_id, entry.Teacher_id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	_, err = r.RowsAffected()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	c.JSON(http.StatusOK, gin.H{"result": "Insert after " + strconv.FormatInt(line, 10)})
 }
 

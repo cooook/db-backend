@@ -113,7 +113,7 @@ select ID, Score from `Choose` where CourseID='C1' and ID in
 (select Choose.Score from Choose, Student where Student.Name='张三' and Choose.CourseID='C1' and Choose.ID = Student.ID
 ));
 
-select Student.ID from Student where ID in(select ID from Choose where Choose.CourseID = 'C1') 
+select Student.ID from Student where ID in(select ID from Choose where Choose.CourseID = 'C3') 
 and ID in(select ID from Choose where Choose.CourseID='C2');
 
 create user 'DCL' identified by 'DCL';
